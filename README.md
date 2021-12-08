@@ -49,17 +49,23 @@ const [selectedValue, setSelectedValue] = useState<string | undefined>();
 
 // ...
 
-<RadioGroup
-  name="fruit"
-  selectedValue={selectedValue}
-  onSelectedValueChange={setSelectedValue}
->
-  {options.map(({ label, value }) => (
-    <label htmlFor={value} key={value}>
-      <Radio value={value} id={value} />
+<form>
+  <fieldset>
+    <legend>Fruit</legend>
 
-      {label}
-    </label>
-  ))}
-</RadioGroup>;
+    <RadioGroup
+      name="fruit"
+      selectedValue={selectedValue}
+      onSelectedValueChange={setSelectedValue}
+    >
+      {options.map(({ label, value }) => (
+        <label htmlFor={value} key={value}>
+          <Radio value={value} id={value} />
+
+          {label}
+        </label>
+      ))}
+    </RadioGroup>
+  </fieldset>
+</form>;
 ```
