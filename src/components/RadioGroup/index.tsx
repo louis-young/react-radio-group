@@ -31,7 +31,7 @@ export const RadioGroup = ({
 
   return (
     <RadioGroupContext.Provider value={value}>
-      <fieldset>{children}</fieldset>
+      {children}
     </RadioGroupContext.Provider>
   );
 };
