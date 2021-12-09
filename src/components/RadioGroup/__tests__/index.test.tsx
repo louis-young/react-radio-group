@@ -121,8 +121,10 @@ describe("<RadioGroup />", () => {
   });
 
   describe("<Radio />", () => {
-    it("sets the `name` attribute", () => {
-      const name = "__NAME__";
+    it("sets the expected attributes", () => {
+      const name = "name";
+      const value = "value";
+      const id = "id";
 
       render(
         <RadioGroup
@@ -130,48 +132,14 @@ describe("<RadioGroup />", () => {
           selectedValue={defaultSelectedValue}
           onSelectedValueChange={defaultOnSelectedValueChange}
         >
-          <Radio value={firstValue} />
+          <Radio value={value} id={id} />
         </RadioGroup>,
       );
 
       const radio = screen.getByRole("radio");
 
       expect(radio).toHaveAttribute("name", name);
-    });
-
-    it("sets the `value` attribute", () => {
-      const value = "__VALUE__";
-
-      render(
-        <RadioGroup
-          name={defaultName}
-          selectedValue={defaultSelectedValue}
-          onSelectedValueChange={defaultOnSelectedValueChange}
-        >
-          <Radio value={value} />
-        </RadioGroup>,
-      );
-
-      const radio = screen.getByRole("radio");
-
       expect(radio).toHaveAttribute("value", value);
-    });
-
-    it("sets additional attributes", () => {
-      const id = "__ID__";
-
-      render(
-        <RadioGroup
-          name={defaultName}
-          selectedValue={defaultSelectedValue}
-          onSelectedValueChange={defaultOnSelectedValueChange}
-        >
-          <Radio value={firstValue} id={id} />
-        </RadioGroup>,
-      );
-
-      const radio = screen.getByRole("radio");
-
       expect(radio).toHaveAttribute("id", id);
     });
   });
