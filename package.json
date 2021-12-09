@@ -6,12 +6,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watch",
     "eject": "react-scripts eject",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --check \"./src/**/*.{ts,tsx}\"",
     "format:write": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "prepare": "husky install"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "./src/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 90,
+        "statements": 90
+      }
+    }
   },
   "dependencies": {
     "react": "^17.0.2",
