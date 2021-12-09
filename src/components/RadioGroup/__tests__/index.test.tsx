@@ -142,5 +142,17 @@ describe("<RadioGroup />", () => {
       expect(radio).toHaveAttribute("value", value);
       expect(radio).toHaveAttribute("id", id);
     });
+
+    it("throws an error when used outside of a `RadioGroup`", () => {
+      const consoleError = console.error;
+
+      console.error = jest.fn();
+
+      expect(() => render(<Radio value={firstValue} />)).toThrowError(
+        "`Radio` must be used within a `RadioGroup`.",
+      );
+
+      console.error = consoleError;
+    });
   });
 });
