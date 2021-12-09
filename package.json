@@ -6,7 +6,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watch",
+    "test:coverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
     "lint": "eslint \"./src/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
@@ -16,7 +16,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "./src/**"
+      "src/**/*.{js,jsx,ts,tsx}"
     ],
     "coverageThreshold": {
       "global": {
