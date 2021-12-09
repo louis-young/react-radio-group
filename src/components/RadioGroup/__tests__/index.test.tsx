@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { Radio } from "../../Radio";
 import { RadioGroup } from "../../RadioGroup";
 
@@ -48,7 +48,6 @@ describe("<RadioGroup />", () => {
       expect(radios).toHaveLength(2);
     });
 
-    // Checks as in `checked`.
     it("checks the selected radio input", () => {
       const selectedValue = firstValue;
 
@@ -68,7 +67,7 @@ describe("<RadioGroup />", () => {
       expect(radio).toBeChecked();
     });
 
-    it("calls `onSelectedValueChange` with the new value when selecting a new option", () => {
+    it("calls `onSelectedValueChange` with the new value when clicking an unchecked radio input", () => {
       const selectedValue = firstValue;
 
       const onSelectedValueChange = jest.fn();
@@ -93,6 +92,31 @@ describe("<RadioGroup />", () => {
       userEvent.click(secondRadio);
 
       expect(onSelectedValueChange).toHaveBeenCalledWith(secondValue);
+    });
+
+    it("does not call `onSelectedValueChange` when clicking the checked radio input", () => {
+      const selectedValue = firstValue;
+
+      const onSelectedValueChange = jest.fn();
+
+      render(
+        <RadioGroup
+          name={defaultName}
+          selectedValue={selectedValue}
+          onSelectedValueChange={onSelectedValueChange}
+        >
+          <RadioWithLabel label={firstLabel} value={firstValue} />
+          <RadioWithLabel label={secondLabel} value={secondValue} />
+        </RadioGroup>,
+      );
+
+      const firstRadio = screen.getByLabelText(firstLabel);
+
+      expect(firstRadio).toBeChecked();
+
+      userEvent.click(firstRadio);
+
+      expect(onSelectedValueChange).not.toHaveBeenCalled();
     });
   });
 
