@@ -9,9 +9,7 @@ export const useRadioGroupContext = () => {
   const context = useContext(RadioGroupContext);
 
   if (!context) {
-    throw new Error(
-      "`useRadioGroupContext` must be used within a `RadioGroup`.",
-    );
+    throw new Error("`Radio` must be used within a `RadioGroup`.");
   }
 
   return context;
