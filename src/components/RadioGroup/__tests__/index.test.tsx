@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Radio } from "../../Radio";
 import { RadioGroup } from "../../RadioGroup";
 
@@ -6,6 +7,12 @@ describe("<RadioGroup />", () => {
   const defaultName = "fruit";
   const defaultSelectedValue = "apple";
   const defaultOnSelectedValueChange = jest.fn();
+
+  const firstLabel = "Apple";
+  const firstValue = "apple";
+
+  const secondLabel = "Orange";
+  const secondValue = "orange";
 
   const RadioWithLabel = ({
     label,
@@ -23,58 +30,69 @@ describe("<RadioGroup />", () => {
     );
   };
 
-  const apple = {
-    label: "Apple",
-    value: "apple",
-  };
-
-  const orange = {
-    label: "Orange",
-    value: "orange",
-  };
-
-  const AppleRadioWithLabel = () => {
-    return <RadioWithLabel label={apple.label} value={apple.value} />;
-  };
-
-  const OrangeRadioWithLabel = () => {
-    return <RadioWithLabel label={orange.label} value={orange.value} />;
-  };
-
   describe("<RadioGroup />", () => {
-    it("renders an input for each `Radio` component", () => {
+    it("renders a radio input for each `Radio` component", () => {
       render(
         <RadioGroup
           name={defaultName}
           selectedValue={defaultSelectedValue}
           onSelectedValueChange={defaultOnSelectedValueChange}
         >
-          <AppleRadioWithLabel />
-          <OrangeRadioWithLabel />
+          <Radio value={firstValue} />
+          <Radio value={secondValue} />
         </RadioGroup>,
       );
 
-      const inputs = screen.getAllByRole("radio");
+      const radios = screen.getAllByRole("radio");
 
-      expect(inputs).toHaveLength(2);
+      expect(radios).toHaveLength(2);
     });
 
     // Checks as in `checked`.
-    it("checks the selected input", () => {
+    it("checks the selected radio input", () => {
+      const selectedValue = firstValue;
+
       render(
         <RadioGroup
           name={defaultName}
-          selectedValue={apple.value}
+          selectedValue={selectedValue}
           onSelectedValueChange={defaultOnSelectedValueChange}
         >
-          <AppleRadioWithLabel />
-          <OrangeRadioWithLabel />
+          <RadioWithLabel label={firstLabel} value={firstValue} />
+          <RadioWithLabel label={secondLabel} value={secondValue} />
         </RadioGroup>,
       );
 
-      const input = screen.getByLabelText(apple.label);
+      const radio = screen.getByLabelText(firstLabel);
 
-      expect(input).toBeChecked();
+      expect(radio).toBeChecked();
+    });
+
+    it("calls `onSelectedValueChange` with the new value when selecting a new option", () => {
+      const selectedValue = firstValue;
+
+      const onSelectedValueChange = jest.fn();
+
+      render(
+        <RadioGroup
+          name={defaultName}
+          selectedValue={selectedValue}
+          onSelectedValueChange={onSelectedValueChange}
+        >
+          <RadioWithLabel label={firstLabel} value={firstValue} />
+          <RadioWithLabel label={secondLabel} value={secondValue} />
+        </RadioGroup>,
+      );
+
+      const firstRadio = screen.getByLabelText(firstLabel);
+
+      expect(firstRadio).toBeChecked();
+
+      const secondRadio = screen.getByLabelText(secondLabel);
+
+      userEvent.click(secondRadio);
+
+      expect(onSelectedValueChange).toHaveBeenCalledWith(secondValue);
     });
   });
 
@@ -88,13 +106,13 @@ describe("<RadioGroup />", () => {
           selectedValue={defaultSelectedValue}
           onSelectedValueChange={defaultOnSelectedValueChange}
         >
-          <AppleRadioWithLabel />
+          <Radio value={firstValue} />
         </RadioGroup>,
       );
 
-      const input = screen.getByRole("radio");
+      const radio = screen.getByRole("radio");
 
-      expect(input).toHaveAttribute("name", name);
+      expect(radio).toHaveAttribute("name", name);
     });
 
     it("sets the `value` attribute", () => {
@@ -110,9 +128,9 @@ describe("<RadioGroup />", () => {
         </RadioGroup>,
       );
 
-      const input = screen.getByRole("radio");
+      const radio = screen.getByRole("radio");
 
-      expect(input).toHaveAttribute("value", value);
+      expect(radio).toHaveAttribute("value", value);
     });
 
     it("sets additional attributes", () => {
@@ -124,13 +142,13 @@ describe("<RadioGroup />", () => {
           selectedValue={defaultSelectedValue}
           onSelectedValueChange={defaultOnSelectedValueChange}
         >
-          <Radio value={apple.value} id={id} />
+          <Radio value={firstValue} id={id} />
         </RadioGroup>,
       );
 
-      const input = screen.getByRole("radio");
+      const radio = screen.getByRole("radio");
 
-      expect(input).toHaveAttribute("id", id);
+      expect(radio).toHaveAttribute("id", id);
     });
   });
 });
