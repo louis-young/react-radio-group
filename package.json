@@ -16,12 +16,12 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
+      "./src/components/RadioGroup/*.{ts,tsx}"
     ],
     "coverageThreshold": {
       "global": {
-        "lines": 90,
-        "statements": 90
+        "lines": 100,
+        "statements": 100
       }
     }
   },
