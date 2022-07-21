@@ -1,8 +1,8 @@
 # React Radio Group
 
-![CI](https://github.com/louis-young/react-radio-group/actions/workflows/main.yml/badge.svg)
-
 ⚠️ Please note that this is an old project and does not reflect the quality of my current work.
+
+![CI](https://github.com/louis-young/react-radio-group/actions/workflows/main.yml/badge.svg)
 
 A set of React components to build declarative radio groups.
 
